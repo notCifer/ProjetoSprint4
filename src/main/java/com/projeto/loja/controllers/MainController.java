@@ -3,10 +3,12 @@ package com.projeto.loja.controllers;
 
 import java.util.List;
 
+import com.projeto.loja.components.PessoaConverter;
 import com.projeto.loja.models.Endereco;
 import com.projeto.loja.models.Pedido;
 import com.projeto.loja.models.Pessoa;
 import com.projeto.loja.models.Produto;
+import com.projeto.loja.models.dto.PessoaDTO;
 import com.projeto.loja.repositories.EnderecoRepository;
 import com.projeto.loja.repositories.PedidoRepository;
 import com.projeto.loja.repositories.PessoaRepository;
@@ -32,24 +34,21 @@ public class MainController {
     @Autowired
     private PedidoRepository PedidoR;
 
-    // @Autowired
-    // private ModelMapper mapper;
+    @Autowired
+    private PessoaConverter converter;
 
     // ______________METODOS PESSOAS______________
 
     @RequestMapping(value = "/loja/pessoa", method = RequestMethod.GET)
-    public List<Pessoa> FindAllPessoas() {
-        return PessoaR.findAll();
+    public List<PessoaDTO> FindAllPessoas() {
+        List<Pessoa> findAll = PessoaR.findAll();
+        return converter.EntidDTO(findAll);
     }
 
     @RequestMapping(value = "/loja/pessoa", method = RequestMethod.POST)
     public Pessoa AddPessoa(@RequestBody Pessoa P) {
         return PessoaR.save(P);
     }
-
-    // private PessoaDTO toPessoaDTO(Pessoa pessoa){
-    //     return mapper.map(pessoa, PessoaDTO.class);
-    // }
 
     // ______________METODOS PRODUTOS______________
     @RequestMapping(value = "/loja/produto", method = RequestMethod.GET)
