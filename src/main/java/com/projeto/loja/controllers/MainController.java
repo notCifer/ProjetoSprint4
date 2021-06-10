@@ -1,8 +1,7 @@
 package com.projeto.loja.controllers;
 
-import java.util.Arrays;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.projeto.loja.models.Endereco;
 import com.projeto.loja.models.Pedido;
@@ -38,10 +37,10 @@ public class MainController {
 
     // ______________METODOS PESSOAS______________
 
-    // @RequestMapping(value = "/loja/pessoa", method = RequestMethod.GET)
-    // public List<PessoaDTO> FindAllPessoas() {
-    //     return PessoaR.findAll().stream().map(this::toPessoaDTO).collect(Collectors.toList());
-    // }
+    @RequestMapping(value = "/loja/pessoa", method = RequestMethod.GET)
+    public List<Pessoa> FindAllPessoas() {
+        return PessoaR.findAll();
+    }
 
     @RequestMapping(value = "/loja/pessoa", method = RequestMethod.POST)
     public Pessoa AddPessoa(@RequestBody Pessoa P) {
