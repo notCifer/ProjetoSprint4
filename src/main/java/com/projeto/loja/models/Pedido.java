@@ -23,13 +23,13 @@ public class Pedido {
     @JoinColumn(name = "pedido_id")
     private List<Produto> produtos;
 
-    public Pedido(double total, Date date, List<Produto> produtos ) {
+    public Pedido() {
+    }
+
+    public Pedido(double total, Date date, List<Produto> produtos) {
         this.total = total;
         this.date = date;
         this.produtos = produtos;
-    }
-
-    public Pedido() {
     }
 
     public Long getId() {

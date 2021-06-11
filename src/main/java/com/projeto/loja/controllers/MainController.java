@@ -1,23 +1,25 @@
 package com.projeto.loja.controllers;
 
-
+import java.net.URI;
 import java.util.List;
-
-import com.projeto.loja.components.PessoaConverter;
-import com.projeto.loja.models.Endereco;
 import com.projeto.loja.models.Pedido;
 import com.projeto.loja.models.Pessoa;
 import com.projeto.loja.models.Produto;
+import com.projeto.loja.models.dto.PedidoDTO;
 import com.projeto.loja.models.dto.PessoaDTO;
+import com.projeto.loja.models.form.PedidoFORM;
+import com.projeto.loja.models.form.PessoaFORM;
 import com.projeto.loja.repositories.EnderecoRepository;
 import com.projeto.loja.repositories.PedidoRepository;
 import com.projeto.loja.repositories.PessoaRepository;
 import com.projeto.loja.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 public class MainController {
@@ -29,25 +31,24 @@ public class MainController {
     private ProdutoRepository ProdutoR;
 
     @Autowired
-    private EnderecoRepository EnderecoR;
-
-    @Autowired
     private PedidoRepository PedidoR;
 
-    @Autowired
-    private PessoaConverter converter;
 
     // ______________METODOS PESSOAS______________
 
     @RequestMapping(value = "/loja/pessoa", method = RequestMethod.GET)
     public List<PessoaDTO> FindAllPessoas() {
         List<Pessoa> findAll = PessoaR.findAll();
-        return converter.EntidDTO(findAll);
+        PessoaDTO DTO = new PessoaDTO();
+        return DTO.EntidDTO(findAll);
     }
 
     @RequestMapping(value = "/loja/pessoa", method = RequestMethod.POST)
-    public Pessoa AddPessoa(@RequestBody Pessoa P) {
-        return PessoaR.save(P);
+    public ResponseEntity<PessoaDTO> AddPessoa(@RequestBody PessoaFORM FORM, UriComponentsBuilder uriBuilder) {
+        Pessoa pessoa = FORM.toForm(PessoaR);
+        PessoaR.save(pessoa);
+        URI uri = uriBuilder.path("/loja/pessoa/{id}").buildAndExpand(pessoa.getId()).toUri();
+        return ResponseEntity.created(uri).body(new PessoaDTO(pessoa));
     }
 
     // ______________METODOS PRODUTOS______________
@@ -62,25 +63,30 @@ public class MainController {
     }
 
     // ______________METODOS ENDERECOS______________
-    @RequestMapping(value = "/loja/endereco", method = RequestMethod.GET)
-    public List<Endereco> FindAllEnderecos() {
-        return EnderecoR.findAll();
-    }
+    // @RequestMapping(value = "/loja/endereco", method = RequestMethod.GET)
+    // public List<Endereco> FindAllEnderecos() {
+    //     return EnderecoR.findAll();
+    // }
 
-    @RequestMapping(value = "/loja/endereco", method = RequestMethod.POST)
-    public Endereco AddEndereco(@RequestBody Endereco E) {
-        return EnderecoR.save(E);
-    }
+    // @RequestMapping(value = "/loja/endereco", method = RequestMethod.POST)
+    // public Endereco AddEndereco(@RequestBody Endereco E) {
+    //     return EnderecoR.save(E);
+    // }
 
     // ______________METODOS PEDIDOS______________
     @RequestMapping(value = "/loja/pedido", method = RequestMethod.GET)
-    public List<Pedido> FindAllPedidos() {
-        return PedidoR.findAll();
+    public List<PedidoDTO> FindAllPedidos() {
+        List<Pedido> findAll = PedidoR.findAll();
+        PedidoDTO DTO = new PedidoDTO();
+        return DTO.EntidDTO(findAll);
     }
 
     @RequestMapping(value = "/loja/pedido", method = RequestMethod.POST)
-    public Pedido AddPedido(@RequestBody Pedido P) {
-        return PedidoR.save(P);
+    public ResponseEntity<PedidoDTO> AddPedido(@RequestBody PedidoFORM FORM, UriComponentsBuilder uriBuilder) {
+        Pedido pedido = FORM.toForm(PedidoR);
+        PedidoR.save(pedido);
+        URI uri = uriBuilder.path("/loja/pedido/{id}").buildAndExpand(pedido.getId()).toUri();
+        return ResponseEntity.created(uri).body(new PedidoDTO(pedido));
     }
 
 }

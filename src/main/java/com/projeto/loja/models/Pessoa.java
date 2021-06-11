@@ -26,7 +26,7 @@ public class Pessoa {
 
     public Pessoa() {
     }
-    
+
     public Pessoa(String nome, Long cpf, Double salario, char sexo, List<Endereco> endereco) {
         this.nome = nome;
         this.cpf = cpf;
@@ -34,9 +34,6 @@ public class Pessoa {
         this.sexo = sexo;
         this.endereco = endereco;
     }
-
-    
-
 
     public Long getId() {
         return id;
@@ -85,6 +82,5 @@ public class Pessoa {
     public void setEndereços(List<Endereco> endereços) {
         this.endereco = endereços;
     }
-
 
 }
