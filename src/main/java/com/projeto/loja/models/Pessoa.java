@@ -83,4 +83,9 @@ public class Pessoa {
         this.endereco = endereços;
     }
 
+    @Override
+    public String toString() {
+        return "Nome: " + nome;
+    }
+
 }

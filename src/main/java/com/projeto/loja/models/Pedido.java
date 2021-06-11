@@ -1,35 +1,35 @@
 package com.projeto.loja.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double total;
-    private Date date;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pedido_id")
-    private List<Produto> produtos;
+    private LocalDateTime date;
+    @ManyToMany
+    private List<Produto> produto;
+    @ManyToOne
+    private Pessoa pessoa;
 
     public Pedido() {
     }
 
-    public Pedido(double total, Date date, List<Produto> produtos) {
+    public Pedido(Pessoa pessoa, List<Produto> produtos, Double total){
+        this.pessoa = pessoa;
+        this.produto = produtos;
+        this.date = LocalDateTime.now();         
         this.total = total;
-        this.date = date;
-        this.produtos = produtos;
     }
 
     public Long getId() {
@@ -48,20 +48,32 @@ public class Pedido {
         this.total = total;
     }
 
-    public Date getDate() {
+    public List<Produto> getIdproduto() {
+        return produto;
+    }
+
+    public void setIdproduto(List<Produto> idproduto) {
+        this.produto = idproduto;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public List<Produto> getProduto() {
+        return produto;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setProduto(List<Produto> produto) {
+        this.produto = produto;
     }
 
 }

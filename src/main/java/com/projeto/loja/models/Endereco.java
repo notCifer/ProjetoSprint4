@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Endereco {
@@ -16,6 +17,19 @@ public class Endereco {
     private String cidade;
     private String cep;
     private String rua;
+    
+
+    public Endereco() {
+    }
+
+    public Endereco(@NotNull String pais, @NotNull String estado, @NotNull String cidade, @NotNull String cep,
+            @NotNull String rua) {
+        this.pais = pais;
+        this.estado = estado;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.rua = rua;
+    }
 
     public Long getId() {
         return id;

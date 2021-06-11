@@ -1,10 +1,8 @@
 package com.projeto.loja.models.form;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import com.projeto.loja.models.Endereco;
 import com.projeto.loja.models.Pessoa;
-import com.projeto.loja.models.dto.PessoaDTO;
 import com.projeto.loja.repositories.PessoaRepository;
 
 public class PessoaFORM {

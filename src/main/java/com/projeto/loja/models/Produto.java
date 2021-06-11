@@ -14,6 +14,14 @@ public class Produto {
     private String descricao;
     private Double precoUnitario;
 
+    public Produto() {
+    }
+
+    public Produto(String descricao, Double precoUnitario) {
+        this.descricao = descricao;
+        this.precoUnitario = precoUnitario;
+    }
+
     public Long getId() {
         return id;
     }

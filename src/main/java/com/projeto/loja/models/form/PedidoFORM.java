@@ -1,30 +1,47 @@
 package com.projeto.loja.models.form;
 
-import java.util.Date;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.projeto.loja.models.Pedido;
+import com.projeto.loja.models.Pessoa;
 import com.projeto.loja.models.Produto;
 import com.projeto.loja.repositories.PedidoRepository;
-
+import com.projeto.loja.repositories.PessoaRepository;
+import com.projeto.loja.repositories.ProdutoRepository;
 
 public class PedidoFORM {
 
-    private List<Produto> produtos;
+    private Long idpessoa;
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    private List<Long> idproduto;
+
+    public List<Long> getIdproduto() {
+        return idproduto;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setIdproduto(List<Long> idproduto) {
+        this.idproduto = idproduto;
     }
 
-    public Pedido toForm(PedidoRepository PedidoR) {
+    public void setIdpessoa(Long idpessoa) {
+        this.idpessoa = idpessoa;
+    }
+
+    public Pedido toForm(PedidoRepository PedidoR, PessoaRepository PessoaR, ProdutoRepository ProdutoR) {
+
         Double total = 0.0;
-        for (Produto P : produtos) {
-            total =+ P.getPrecoUnitario();
+        Pessoa pessoa = PessoaR.getOne(idpessoa);
+        List<Produto> produtos = new ArrayList<>();
+
+        for (Long idp : idproduto) {
+            Produto produto = ProdutoR.getById(idp);
+            total += produto.getPrecoUnitario();
+            produtos.add(produto);
         }
-        Date date = new Date();  
-        return new Pedido(total,date,produtos);
+        Pedido pedido = new Pedido(pessoa, produtos, total);
+        PedidoR.save(pedido);
+        return pedido;
     }
+
 }
