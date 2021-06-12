@@ -9,6 +9,7 @@ public class PessoaDTO {
     private String nome;
     private Long cpf;
     private char sexo;
+    private List<EnderecoDTO> enderecoDTO;
 
     public String getNome() {
         return nome;
@@ -34,11 +35,21 @@ public class PessoaDTO {
         this.sexo = sexo;
     }
 
+    public List<EnderecoDTO> getEnderecoDTO() {
+        return enderecoDTO;
+    }
+
+    public void setEnderecoDTO(List<EnderecoDTO> enderecos) { 
+        this.enderecoDTO = enderecos;
+    }
+
     public PessoaDTO EntidDTO(Pessoa pessoa) {
         PessoaDTO DTO = new PessoaDTO();
+        EnderecoDTO DTO2 = new EnderecoDTO();
         DTO.setNome(pessoa.getNome());
         DTO.setCpf(pessoa.getCpf());
         DTO.setSexo(pessoa.getSexo());
+        DTO.setEnderecoDTO(DTO2.EntidDTO(pessoa.getEndereços()));
         return DTO;
     }
 

@@ -3,6 +3,7 @@ package com.projeto.loja.models;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @Column(unique = true)
     private Long cpf;
     private Double salario;
     private char sexo;
@@ -39,53 +41,23 @@ public class Pessoa {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public Long getCpf() {
         return cpf;
     }
 
-    public void setCpf(Long cpf) {
-        this.cpf = cpf;
-    }
-
     public Double getSalario() {
         return salario;
-    }
-
-    public void setSalario(Double salario) {
-        this.salario = salario;
     }
 
     public char getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
-        this.sexo = sexo;
-    }
-
     public List<Endereco> getEndereços() {
         return endereco;
     }
-
-    public void setEndereços(List<Endereco> endereços) {
-        this.endereco = endereços;
-    }
-
-    @Override
-    public String toString() {
-        return "Nome: " + nome;
-    }
-
 }

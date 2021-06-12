@@ -2,6 +2,10 @@ package com.projeto.loja.models.form;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.projeto.loja.models.Pedido;
 import com.projeto.loja.models.Pessoa;
 import com.projeto.loja.models.Produto;
@@ -11,7 +15,9 @@ import com.projeto.loja.repositories.ProdutoRepository;
 
 public class PedidoFORM {
 
+    @NotNull
     private Long idpessoa;
+    @NotNull @NotEmpty
     private List<Long> idproduto;
 
     public void setIdproduto(List<Long> idproduto) {
@@ -24,7 +30,7 @@ public class PedidoFORM {
 
     public Pedido toForm(PedidoRepository PedidoR, PessoaRepository PessoaR, ProdutoRepository ProdutoR) {
         Double total = 0.0;
-        Pessoa pessoa = PessoaR.getOne(idpessoa);
+        Pessoa pessoa = PessoaR.getById(idpessoa);
         List<Produto> produtos = new ArrayList<>();
 
         for (Long idp : idproduto) {
