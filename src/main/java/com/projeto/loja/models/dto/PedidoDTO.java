@@ -2,44 +2,14 @@ package com.projeto.loja.models.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import com.projeto.loja.models.Pedido;
-import com.projeto.loja.models.Produto;
-import com.projeto.loja.repositories.ProdutoRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class PedidoDTO {
 
-    @Autowired
-    private ProdutoRepository ProdutoR;
-
     private double total;
     private LocalDateTime date;
-    private List<Produto> produtos;
-
-    public PedidoDTO() {
-    }
-
-    public PedidoDTO(Pedido pedido) {
-        this.total = pedido.getTotal();
-        this.date = pedido.getDate();
-        // Converter _________________________
-        for(int x = 0; x > pedido.getIdproduto().size(); x++){
-            Long idprodutoLong=Long.valueOf(x);
-            Optional<Produto> produto = ProdutoR.findById(idprodutoLong);
-            Produto P = produto.get();
-            produtos.add(P);
-        }
-        // ____________________________________
-    }
-
-    public PedidoDTO(double total, LocalDateTime date, List<Produto> produtos) {
-        this.total = total;
-        this.date = date;
-        this.produtos = produtos;
-    }
+    private List<ProdutoDTO> produtosDTO;
 
     public double getTotal() {
         return total;
@@ -57,19 +27,20 @@ public class PedidoDTO {
         this.date = date;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<ProdutoDTO> getProdutosDTO() {
+        return produtosDTO;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setProdutosDTO(List<ProdutoDTO> produtosDTO) {
+        this.produtosDTO = produtosDTO;
     }
 
     public PedidoDTO EntidDTO(Pedido pedido) {
         PedidoDTO DTO = new PedidoDTO();
-        DTO.setTotal(total);
-        DTO.setDate(date);
-        DTO.setProdutos(produtos);
+        ProdutoDTO DTO2 = new ProdutoDTO();
+        DTO.setTotal(pedido.getTotal());
+        DTO.setDate(pedido.getDate());
+        DTO.setProdutosDTO(DTO2.EntidDTO(pedido.getProduto()));
         return DTO;
     }
 

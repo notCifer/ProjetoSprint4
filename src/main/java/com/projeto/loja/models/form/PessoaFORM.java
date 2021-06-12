@@ -12,25 +12,13 @@ public class PessoaFORM {
     private Double salario;
     private char sexo;
     private List<Endereco> endereco;
-    
-    public String getNome() {
-        return nome;
-    }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public Long getCpf() {
-        return cpf;
-    }
-
     public void setCpf(Long cpf) {
         this.cpf = cpf;
-    }
-
-    public Double getSalario() {
-        return salario;
     }
 
     public void setSalario(Double salario) {
@@ -53,7 +41,7 @@ public class PessoaFORM {
         this.endereco = endereco;
     }
 
-    public Pessoa toForm(PessoaRepository PessoaR){
+    public Pessoa toForm(PessoaRepository PessoaR) {
         return new Pessoa(nome, cpf, salario, sexo, endereco);
     }
 

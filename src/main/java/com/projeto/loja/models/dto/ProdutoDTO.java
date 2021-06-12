@@ -2,27 +2,20 @@ package com.projeto.loja.models.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.projeto.loja.models.Produto;
 
 public class ProdutoDTO {
 
+    private Long id;
     private String descricao;
     private Double precoUnitario;
-
     
-
-    public ProdutoDTO() {
+    public Long getId() {
+        return id;
     }
 
-    public ProdutoDTO(Produto produto) {
-        this.descricao = produto.getDescricao();
-        this.precoUnitario = produto.getPrecoUnitario();
-    }
-
-    public ProdutoDTO(String descricao, Double precoUnitario) {
-        this.descricao = descricao;
-        this.precoUnitario = precoUnitario;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescricao() {
@@ -43,6 +36,7 @@ public class ProdutoDTO {
 
     public ProdutoDTO EntidDTO(Produto produto) {
         ProdutoDTO DTO = new ProdutoDTO();
+        DTO.setId(produto.getId());
         DTO.setDescricao(produto.getDescricao());
         DTO.setPrecoUnitario(produto.getPrecoUnitario());
         return DTO;
@@ -51,5 +45,7 @@ public class ProdutoDTO {
     public List<ProdutoDTO> EntidDTO(List<Produto> produtos) {
         return produtos.stream().map(produto -> EntidDTO(produto)).collect(Collectors.toList());
     }
+
+
 
 }

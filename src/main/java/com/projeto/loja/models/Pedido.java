@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -18,6 +20,9 @@ public class Pedido {
     private double total;
     private LocalDateTime date;
     @ManyToMany
+    @JoinTable(name = "pedido_produtos", 
+		joinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id"), 
+		inverseJoinColumns = @JoinColumn(name = "pedido_if", referencedColumnName = "id"))
     private List<Produto> produto;
     @ManyToOne
     private Pessoa pessoa;
@@ -48,24 +53,11 @@ public class Pedido {
         this.total = total;
     }
 
-    public List<Produto> getIdproduto() {
-        return produto;
-    }
-
-    public void setIdproduto(List<Produto> idproduto) {
-        this.produto = idproduto;
-    }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
     public LocalDateTime getDate() {
         return date;
+    }
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public List<Produto> getProduto() {
@@ -74,6 +66,13 @@ public class Pedido {
 
     public void setProduto(List<Produto> produto) {
         this.produto = produto;
+    }
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
 }

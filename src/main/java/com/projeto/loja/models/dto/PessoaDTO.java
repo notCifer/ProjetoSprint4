@@ -2,7 +2,6 @@ package com.projeto.loja.models.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.projeto.loja.models.Pessoa;
 
 public class PessoaDTO {
@@ -10,15 +9,6 @@ public class PessoaDTO {
     private String nome;
     private Long cpf;
     private char sexo;
-
-    public PessoaDTO() {
-    }
-
-    public PessoaDTO(Pessoa pessoa) {
-        this.nome = pessoa.getNome();
-        this.cpf = pessoa.getCpf();
-        this.sexo = pessoa.getSexo();
-    }
 
     public String getNome() {
         return nome;
