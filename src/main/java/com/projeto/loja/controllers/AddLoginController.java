@@ -4,10 +4,10 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
-import com.projeto.loja.models.Login;
+import com.projeto.loja.models.Usuario;
 import com.projeto.loja.models.dto.LoginDTO;
 import com.projeto.loja.models.form.LoginFORM;
-import com.projeto.loja.repositories.LoginRepository;
+import com.projeto.loja.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +21,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AddLoginController {
 
     @Autowired
-    private LoginRepository LoginR;
+    private UsuarioRepository LoginR;
 
-    @PostMapping
-    public ResponseEntity<?> add(@RequestBody @Valid LoginFORM FORM, UriComponentsBuilder uriBuilder){
-        Login login = FORM.toForm(LoginR);
-        URI uri = uriBuilder.path("/add/{id}").buildAndExpand(login.getId()).toUri();
-        return ResponseEntity.created(uri).body(new LoginDTO().EntidDTO(login));
-    }
+    // @PostMapping
+    // public ResponseEntity<?> add(@RequestBody @Valid LoginFORM FORM, UriComponentsBuilder uriBuilder){
+    //     Usuario login = FORM.toForm(LoginR);
+    //     URI uri = uriBuilder.path("/add/{id}").buildAndExpand(login.getId()).toUri();
+    //     return ResponseEntity.created(uri).body(new LoginDTO().EntidDTO(login));
+    // }
 }

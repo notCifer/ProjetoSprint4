@@ -3,7 +3,7 @@ package com.projeto.loja.models.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.projeto.loja.models.Login;
+import com.projeto.loja.models.Usuario;
 
 public class LoginDTO {
 
@@ -17,13 +17,13 @@ public class LoginDTO {
         return email;
     }
 
-    public LoginDTO EntidDTO(Login login) {
+    public LoginDTO EntidDTO(Usuario login) {
         LoginDTO DTO = new LoginDTO();
         DTO.setEmail(login.getEmail());
         return DTO;
     }
 
-    public List<LoginDTO> EntidDTO(List<Login> logins) {
+    public List<LoginDTO> EntidDTO(List<Usuario> logins) {
         return logins.stream().map(login -> EntidDTO(login)).collect(Collectors.toList());
     }
 
