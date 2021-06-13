@@ -5,27 +5,16 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.projeto.loja.models.Pedido;
-import com.projeto.loja.models.Pessoa;
 import com.projeto.loja.models.Produto;
 import com.projeto.loja.repositories.PedidoRepository;
-import com.projeto.loja.repositories.PessoaRepository;
 import com.projeto.loja.repositories.ProdutoRepository;
 
 public class PedidoFORM {
 
     @NotNull
-    private Long idpessoa;
-    @NotNull
     @NotEmpty
     private List<Long> idproduto;
 
-    public Long getIdpessoa() {
-        return idpessoa;
-    }
-
-    public void setIdpessoa(Long idpessoa) {
-        this.idpessoa = idpessoa;
-    }
 
     public List<Long> getIdproduto() {
         return idproduto;
@@ -35,9 +24,8 @@ public class PedidoFORM {
         this.idproduto = idproduto;
     }
 
-    public Pedido toForm(PedidoRepository PedidoR, PessoaRepository PessoaR, ProdutoRepository ProdutoR) {
+    public Pedido toForm(PedidoRepository PedidoR, ProdutoRepository ProdutoR) {
         Double total = 0.0;
-        Pessoa pessoa = PessoaR.getById(idpessoa);
         List<Produto> produtos = new ArrayList<>();
 
         for (Long idp : idproduto) {
@@ -48,7 +36,7 @@ public class PedidoFORM {
 
         }
 
-        Pedido pedido = new Pedido(pessoa, produtos, total);
+        Pedido pedido = new Pedido(produtos, total);
         PedidoR.save(pedido);
         return pedido;
     }

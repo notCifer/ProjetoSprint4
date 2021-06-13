@@ -9,7 +9,6 @@ import com.projeto.loja.models.Pedido;
 import com.projeto.loja.models.dto.PedidoDTO;
 import com.projeto.loja.models.form.PedidoFORM;
 import com.projeto.loja.repositories.PedidoRepository;
-import com.projeto.loja.repositories.PessoaRepository;
 import com.projeto.loja.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +31,6 @@ public class PedidoController {
 
     @Autowired
     private PedidoRepository PedidoR;
-
-    @Autowired
-    private PessoaRepository PessoaR;
 
     @Autowired
     private ProdutoRepository ProdutoR;
@@ -73,7 +69,7 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<PedidoDTO> AddPedido(@RequestBody @Valid PedidoFORM FORM, UriComponentsBuilder uriBuilder) {
-        Pedido pedido = FORM.toForm(PedidoR, PessoaR, ProdutoR);
+        Pedido pedido = FORM.toForm(PedidoR,ProdutoR);
         URI uri = uriBuilder.path("/protected/pedido/{id}").buildAndExpand(pedido.getId()).toUri();
         return ResponseEntity.created(uri).body(new PedidoDTO().EntidDTO(pedido));
     }
