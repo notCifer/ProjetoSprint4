@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.projeto.loja.models.Usuario;
 
-public class LoginDTO {
+public class UsuarioDTO {
 
     private String email;
 
@@ -17,13 +17,13 @@ public class LoginDTO {
         return email;
     }
 
-    public LoginDTO EntidDTO(Usuario login) {
-        LoginDTO DTO = new LoginDTO();
+    public UsuarioDTO EntidDTO(Usuario login) {
+        UsuarioDTO DTO = new UsuarioDTO();
         DTO.setEmail(login.getEmail());
         return DTO;
     }
 
-    public List<LoginDTO> EntidDTO(List<Usuario> logins) {
+    public List<UsuarioDTO> EntidDTO(List<Usuario> logins) {
         return logins.stream().map(login -> EntidDTO(login)).collect(Collectors.toList());
     }
 
