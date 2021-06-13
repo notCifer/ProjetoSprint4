@@ -10,6 +10,18 @@ public class ProdutoDTO {
     private String descricao;
     private Double precoUnitario;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Double getPrecoUnitario() {
+        return precoUnitario;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -21,6 +33,8 @@ public class ProdutoDTO {
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
     }
+
+    
 
     public ProdutoDTO EntidDTO(Produto produto) {
         ProdutoDTO DTO = new ProdutoDTO();

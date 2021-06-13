@@ -1,4 +1,4 @@
-package com.projeto.loja.services;
+package com.projeto.loja.configs.services;
 
 import java.util.Optional;
 import com.projeto.loja.models.Usuario;

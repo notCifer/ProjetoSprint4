@@ -15,8 +15,25 @@ public class PedidoFORM {
 
     @NotNull
     private Long idpessoa;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private List<Long> idproduto;
+
+    public Long getIdpessoa() {
+        return idpessoa;
+    }
+
+    public void setIdpessoa(Long idpessoa) {
+        this.idpessoa = idpessoa;
+    }
+
+    public List<Long> getIdproduto() {
+        return idproduto;
+    }
+
+    public void setIdproduto(List<Long> idproduto) {
+        this.idproduto = idproduto;
+    }
 
     public Pedido toForm(PedidoRepository PedidoR, PessoaRepository PessoaR, ProdutoRepository ProdutoR) {
         Double total = 0.0;

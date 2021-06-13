@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping(value = "/protected/produto")
+@Api(description = "(AUTENTICADO) Funções de produtos", tags = { "Produto" })
 public class ProdutoController {
 
     @Autowired

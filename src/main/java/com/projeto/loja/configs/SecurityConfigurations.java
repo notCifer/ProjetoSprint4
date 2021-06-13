@@ -1,6 +1,9 @@
 package com.projeto.loja.configs;
 
-import com.projeto.loja.services.AutenticacaoService;
+import com.projeto.loja.configs.services.AutenticacaoService;
+import com.projeto.loja.configs.services.TokenService;
+import com.projeto.loja.configs.tools.AuthTokenFilter;
+import com.projeto.loja.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +11,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -21,32 +23,42 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AutenticacaoService autenticacaoService;
-	
+
+	@Autowired
+	private UsuarioRepository UsuarioR;
+
+	@Autowired
+	private TokenService TokenS;
+
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers(HttpMethod.GET, "/topicos").permitAll()
-		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
-		.antMatchers(HttpMethod.POST, "/auth").permitAll()
-		.antMatchers(HttpMethod.POST, "/add").permitAll()
-		.anyRequest().authenticated()
-		.and().csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.csrf().disable().authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
+				.antMatchers(HttpMethod.GET, "/pessoa").permitAll()
+				.antMatchers(HttpMethod.GET, "/pessoa/*").permitAll()
+				.antMatchers(HttpMethod.POST, "/pessoa").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/pessoa/*").permitAll()
+				.antMatchers(HttpMethod.POST, "/auth").permitAll()
+				.antMatchers(HttpMethod.POST, "/user").permitAll()
+				.antMatchers(HttpMethod.GET, "/user").permitAll()
+				.antMatchers(HttpMethod.GET, "/user/*").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/user/*").permitAll()
+				.anyRequest().authenticated().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.addFilterBefore(new AuthTokenFilter(TokenS, UsuarioR), UsernamePasswordAuthenticationFilter.class);
 	}
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	}
-	
+
+	private static final String[] AUTH_WHITELIST = { "/v2/api-docs", "/swagger-resources", "/swagger-resources/**",
+			"/configuration/ui", "/configuration/security", "/swagger-ui.html", "/webjars/**", };
+
 }

@@ -15,13 +15,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/endereco")
+@Api(description = "(PERMITIDO) Funções de endereços ", tags = { "Endereço" })
 public class EnderecoController {
 
     @Autowired
     private EnderecoRepository EnderecoR;
 
+    @ApiOperation(value = "Buscar todos os endereços.")
     @GetMapping
     public ResponseEntity<?> FindAllEndereco() {
         List<Endereco> endereco = EnderecoR.findAll();
@@ -29,6 +34,7 @@ public class EnderecoController {
         return ResponseEntity.ok().body(DTO.EntidDTO(endereco));
     }
 
+    @ApiOperation(value = "Buscar um endereço pelo ID.")
     @GetMapping("/{id}")
     public ResponseEntity<?> FindOneEndereco(@PathVariable Long id) {
         try {
@@ -41,6 +47,7 @@ public class EnderecoController {
 
     }
 
+    @ApiOperation(value = "Deletar um endereço pelo ID.")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> RemoveEndereco(@PathVariable Long id) {

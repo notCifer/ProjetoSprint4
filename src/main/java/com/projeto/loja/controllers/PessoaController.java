@@ -22,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping(value = "/pessoa")
+@Api(description = "(PERMITIDO) Funções de pessoas", tags = { "Pessoa" })
 public class PessoaController {
 
     @Autowired
