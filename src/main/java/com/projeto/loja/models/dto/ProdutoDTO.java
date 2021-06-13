@@ -9,25 +9,13 @@ public class ProdutoDTO {
     private Long id;
     private String descricao;
     private Double precoUnitario;
-    
-    public Long getId() {
-        return id;
-    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Double getPrecoUnitario() {
-        return precoUnitario;
     }
 
     public void setPrecoUnitario(Double precoUnitario) {
@@ -45,7 +33,5 @@ public class ProdutoDTO {
     public List<ProdutoDTO> EntidDTO(List<Produto> produtos) {
         return produtos.stream().map(produto -> EntidDTO(produto)).collect(Collectors.toList());
     }
-
-
 
 }

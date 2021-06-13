@@ -11,24 +11,12 @@ public class PedidoDTO {
     private LocalDateTime date;
     private List<ProdutoDTO> produtosDTO;
 
-    public double getTotal() {
-        return total;
-    }
-
     public void setTotal(double total) {
         this.total = total;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
-
     public void setDate(LocalDateTime date) {
         this.date = date;
-    }
-
-    public List<ProdutoDTO> getProdutosDTO() {
-        return produtosDTO;
     }
 
     public void setProdutosDTO(List<ProdutoDTO> produtosDTO) {

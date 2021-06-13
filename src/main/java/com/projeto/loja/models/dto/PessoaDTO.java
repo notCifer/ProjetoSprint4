@@ -11,32 +11,16 @@ public class PessoaDTO {
     private char sexo;
     private List<EnderecoDTO> enderecoDTO;
 
-    public String getNome() {
-        return nome;
-    }
-
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Long getCpf() {
-        return cpf;
     }
 
     public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
 
-    public char getSexo() {
-        return sexo;
-    }
-
     public void setSexo(char sexo) {
         this.sexo = sexo;
-    }
-
-    public List<EnderecoDTO> getEnderecoDTO() {
-        return enderecoDTO;
     }
 
     public void setEnderecoDTO(List<EnderecoDTO> enderecos) { 

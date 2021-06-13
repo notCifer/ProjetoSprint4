@@ -2,11 +2,9 @@ package com.projeto.loja.controllers;
 
 import java.net.URI;
 import java.util.List;
-
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import com.projeto.loja.models.Produto;
 import com.projeto.loja.models.dto.ProdutoDTO;
 import com.projeto.loja.models.form.ProdutoFORM;

@@ -1,12 +1,9 @@
 package com.projeto.loja.controllers;
 
 import java.net.URI;
-
 import javax.validation.Valid;
-
 import com.projeto.loja.models.Usuario;
 import com.projeto.loja.models.dto.UsuarioDTO;
-import com.projeto.loja.models.form.LoginFORM;
 import com.projeto.loja.models.form.UsuarioFORM;
 import com.projeto.loja.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

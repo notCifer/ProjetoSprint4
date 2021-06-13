@@ -2,7 +2,6 @@ package com.projeto.loja.models.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.projeto.loja.models.Usuario;
 
 public class UsuarioDTO {
@@ -11,10 +10,6 @@ public class UsuarioDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public UsuarioDTO EntidDTO(Usuario login) {

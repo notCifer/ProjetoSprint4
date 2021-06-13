@@ -1,14 +1,11 @@
 package com.projeto.loja.controllers;
 
 import java.util.List;
-
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-
 import com.projeto.loja.models.Endereco;
 import com.projeto.loja.models.dto.EnderecoDTO;
 import com.projeto.loja.repositories.EnderecoRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

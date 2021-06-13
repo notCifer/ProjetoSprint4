@@ -22,7 +22,6 @@ public class Usuario implements UserDetails {
 	private String nome;
 	private String email;
 	private String senha;
-	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Regra> regras = new ArrayList<>();
 
