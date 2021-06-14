@@ -29,7 +29,7 @@ public class SwaggerConfig {
         .globalOperationParameters(Arrays.asList(
             new ParameterBuilder()
             .name("Authorization")
-            .description("Header para usar TOKEN")
+            .description("Bearer + TOKEN ")
             .modelRef(new ModelRef("string"))
             .parameterType("header")
             .required(false)

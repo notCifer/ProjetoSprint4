@@ -59,4 +59,34 @@ public class Pessoa {
     public List<Endereco> getEndereços() {
         return endereco;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCpf(Long cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setSalario(Double salario) {
+        this.salario = salario;
+    }
+
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+
+    public List<Endereco> getEndereco() {
+        return endereco;
+    }
+
+    
+    public void setEndereco(List<Endereco> endereco) {
+        this.endereco = endereco;
+    }
+
 }

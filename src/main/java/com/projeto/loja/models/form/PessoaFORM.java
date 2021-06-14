@@ -48,8 +48,8 @@ public class PessoaFORM {
         this.salario = salario;
     }
 
-    public String getSexo() {
-        return sexo;
+    public char getSexo() {
+        return sexo.charAt(0);
     }
 
     public void setSexo(String sexo) {
@@ -65,15 +65,8 @@ public class PessoaFORM {
     }
 
     public Pessoa toForm(PessoaRepository PessoaR) {
-        char s = sexo.charAt(0);
-        Pessoa pessoa = new Pessoa(nome, cpf, salario, s, endereco);
+        Pessoa pessoa = new Pessoa(nome, cpf, salario, getSexo() , endereco);
         PessoaR.save(pessoa);
         return pessoa;
     }
-
-    public Pessoa Alter(Long id, PessoaRepository PessoaR) {
-        Pessoa pessoa = PessoaR.getById(id);
-        return pessoa;
-    }
-
 }

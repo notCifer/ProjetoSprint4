@@ -34,4 +34,16 @@ public class Produto {
         return precoUnitario;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setPrecoUnitario(Double precoUnitario) {
+        this.precoUnitario = precoUnitario;
+    }
+
 }

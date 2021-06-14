@@ -1,7 +1,6 @@
 package com.projeto.loja.models.form;
 
 import javax.validation.constraints.NotBlank;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class LoginFORM {

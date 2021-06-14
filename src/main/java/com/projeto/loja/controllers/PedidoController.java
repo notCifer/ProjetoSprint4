@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/protected/pedido")
@@ -35,13 +36,19 @@ public class PedidoController {
     @Autowired
     private ProdutoRepository ProdutoR;
 
+    @ApiOperation(value = "Buscar todos os pedidos.")
     @GetMapping
-    public ResponseEntity<List<PedidoDTO>> FindAllPedidos() {
-        List<Pedido> pedidos = PedidoR.findAll();
-        PedidoDTO DTO = new PedidoDTO();
-        return new ResponseEntity<>(DTO.EntidDTO(pedidos), HttpStatus.OK);
+    public ResponseEntity<?> FindAllPedidos() {
+        try {
+            List<Pedido> pedidos = PedidoR.findAll();
+            PedidoDTO DTO = new PedidoDTO();
+            return new ResponseEntity<>(DTO.EntidDTO(pedidos), HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista está vazia");
+        }
     }
 
+    @ApiOperation(value = "Buscar um pedido pelo ID.")
     @GetMapping("/{id}")
     public ResponseEntity<?> FindOnePedido(@PathVariable Long id) {
         try {
@@ -54,6 +61,7 @@ public class PedidoController {
 
     }
 
+    @ApiOperation(value = "Deletar um pedido pelo ID.")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> RemovePedido(@PathVariable Long id) {
@@ -67,9 +75,10 @@ public class PedidoController {
 
     }
 
+    @ApiOperation(value = "Criar um pedido")
     @PostMapping
     public ResponseEntity<PedidoDTO> AddPedido(@RequestBody @Valid PedidoFORM FORM, UriComponentsBuilder uriBuilder) {
-        Pedido pedido = FORM.toForm(PedidoR,ProdutoR);
+        Pedido pedido = FORM.toForm(PedidoR, ProdutoR);
         URI uri = uriBuilder.path("/protected/pedido/{id}").buildAndExpand(pedido.getId()).toUri();
         return ResponseEntity.created(uri).body(new PedidoDTO().EntidDTO(pedido));
     }

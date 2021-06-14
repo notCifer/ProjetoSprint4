@@ -1,7 +1,6 @@
 package com.projeto.loja.models.form;
 
 import javax.validation.constraints.NotBlank;
-
 import com.projeto.loja.models.Usuario;
 import com.projeto.loja.repositories.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

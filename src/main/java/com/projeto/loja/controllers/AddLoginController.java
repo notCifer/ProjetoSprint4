@@ -2,7 +2,6 @@ package com.projeto.loja.controllers;
 
 import java.net.URI;
 import java.util.List;
-
 import javax.validation.Valid;
 import com.projeto.loja.models.Usuario;
 import com.projeto.loja.models.dto.UsuarioDTO;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,10 +33,15 @@ public class AddLoginController {
 
     @ApiOperation(value = "Buscar todos os emails dos usuários cadastrados.")
     @GetMapping
-    public ResponseEntity<List<UsuarioDTO>> FindAllUsuarios() {
-        List<Usuario> logins = UsuarioR.findAll();
-        UsuarioDTO DTO = new UsuarioDTO();
-        return ResponseEntity.ok().body(DTO.EntidDTO(logins));
+    public ResponseEntity<?> FindAllUsuarios() {
+
+        try {
+            List<Usuario> logins = UsuarioR.findAll();
+            UsuarioDTO DTO = new UsuarioDTO();
+            return ResponseEntity.ok().body(DTO.EntidDTO(logins));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista está vazia");
+        }
     }
 
     @ApiOperation(value = "Buscar um email de um usuário cadastrado pelo ID.")
@@ -64,9 +69,28 @@ public class AddLoginController {
 
     }
 
+    @ApiOperation(value = "Alterar um usario pelo ID.")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> AlterPessoa(@PathVariable Long id, @Valid UsuarioFORM FORM) {
+        try {
+            Usuario usuario = UsuarioR.getById(id);
+            if (usuario!= null) {
+                usuario.setEmail(FORM.getEmail());
+                usuario.setSenha(FORM.getSenha());
+                UsuarioDTO DTO = new UsuarioDTO();
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(DTO.EntidDTO(usuario)); 
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+    }
+
+
     @ApiOperation(value = "Criar um usuário.")
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody @Valid UsuarioFORM FORM, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<?> add(@RequestBody @Valid UsuarioFORM FORM, UriComponentsBuilder uriBuilder) {
         Usuario login = FORM.toForm(UsuarioR);
         URI uri = uriBuilder.path("/user/{id}").buildAndExpand(login.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDTO().EntidDTO(login));

@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/pessoa")
@@ -32,13 +34,19 @@ public class PessoaController {
     @Autowired
     private PessoaRepository PessoaR;
 
+    @ApiOperation(value = "Buscar todas as pessoas.")
     @GetMapping
-    public ResponseEntity<List<PessoaDTO>> FindAllPessoas() {
-        List<Pessoa> findList = PessoaR.findAll();
-        PessoaDTO DTO = new PessoaDTO();
-        return ResponseEntity.ok().body(DTO.EntidDTO(findList));
+    public ResponseEntity<?> FindAllPessoas() {
+        try {
+            List<Pessoa> findList = PessoaR.findAll();
+            PessoaDTO DTO = new PessoaDTO();
+            return ResponseEntity.ok().body(DTO.EntidDTO(findList));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista está vazia");
+        }
     }
 
+    @ApiOperation(value = "Buscar pessoa pelo ID.")
     @GetMapping("/{id}")
     public ResponseEntity<?> FindOnePessoa(@PathVariable Long id) {
         try {
@@ -50,20 +58,29 @@ public class PessoaController {
         }
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity AlterPessoa(@PathVariable Long id, @Valid PessoaFORM
-    // FORM) {
-    // try {
-    // Pessoa pessoa = FORM.Alter(id, PessoaR);
-    // PessoaDTO DTO = new PessoaDTO();
-    // return ResponseEntity.status(HttpStatus.ACCEPTED).body(DTO.EntidDTO(pessoa));
-    // } catch (DataIntegrityViolationException SQL) {
-    // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O numero de CPF ja
-    // foi cadastro em outra pessoa");
-    // }
+    @ApiOperation(value = "Alterar uma pessoa pelo ID.")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> AlterPessoa(@PathVariable Long id, @Valid PessoaFORM FORM) {
+        try {
+            Pessoa pessoa = PessoaR.getById(id);
+            if (pessoa != null) {
+                pessoa.setCpf(FORM.getCpf());
+                pessoa.setNome(FORM.getNome());
+                pessoa.setSalario(FORM.getSalario());
+                pessoa.setSexo(FORM.getSexo());
+                pessoa.setEndereco(FORM.getEndereco());
+                PessoaDTO DTO = new PessoaDTO();
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(DTO.EntidDTO(pessoa)); 
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pessoa não encontrada");
+        } catch (DataIntegrityViolationException SQL) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("O numero de CPF ja foi cadastro em outra pessoa");
+        }
 
-    // }
+    }
 
+    @ApiOperation(value = "Deletar uma pessoa pelo ID.")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> RemovePessoa(@PathVariable Long id) {
@@ -77,6 +94,7 @@ public class PessoaController {
 
     }
 
+    @ApiOperation(value = "Criar um pedido.")
     @PostMapping
     public ResponseEntity<?> AddPessoa(@RequestBody @Valid PessoaFORM FORM, UriComponentsBuilder uriBuilder) {
         try {

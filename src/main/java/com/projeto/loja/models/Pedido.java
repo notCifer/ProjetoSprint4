@@ -47,4 +47,20 @@ public class Pedido {
         return produto;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+    
+    public void setProduto(List<Produto> produto) {
+        this.produto = produto;
+    }
+
 }
